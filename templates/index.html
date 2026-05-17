@@ -214,6 +214,42 @@ Search
 </div>
 
 
+<!-- DEPARTMENT SELECTOR -->
+
+<div class="card">
+
+<h3>Select Department</h3>
+
+<div class="selector" style="margin-bottom:0;">
+<button type="button" onclick="selectDept('75')" id="dept_btn_75" style="background:#1f3c88; color:white;">
+Paris (75)
+</button>
+<button type="button" onclick="selectDept('77')" id="dept_btn_77" style="background:#999;">
+Seine-et-Marne (77)
+</button>
+</div>
+
+<script>
+let selectedDept = "75";  // Default
+
+function selectDept(dept) {
+    selectedDept = dept;
+    document.querySelectorAll("input[name='department']").forEach(el => el.value = dept);
+    // Update button styles
+    document.querySelectorAll("button[id^='dept_btn_']").forEach(btn => {
+        btn.style.background = "#999";
+        btn.style.color = "white";
+    });
+    document.getElementById("dept_btn_" + dept).style.background = "#1f3c88";
+}
+
+// Initialize with default
+selectDept("75");
+</script>
+
+</div>
+
+
 <!-- SELECTOR -->
 
 <div class="selector">
@@ -231,6 +267,7 @@ Search
 <form method="POST">
 
 <input type="hidden" name="form_type" value="maison">
+<input type="hidden" name="department" value="75">
 
 {% for feature in features_maison %}
 
@@ -238,11 +275,7 @@ Search
 
 <label>{{ feature.replace('_', ' ').title() }}</label>
 
-{% if feature in ['latitude', 'longitude'] %}
-<input type="hidden" name="{{ feature }}">
-{% else %}
 <input type="number" step="any" name="{{ feature }}" required>
-{% endif %}
 
 </div>
 
@@ -266,6 +299,7 @@ Search
 <form method="POST">
 
 <input type="hidden" name="form_type" value="appartement">
+<input type="hidden" name="department" value="75">
 
 {% for feature in features_appart %}
 
@@ -273,11 +307,7 @@ Search
 
 <label>{{ feature.replace('_', ' ').title() }}</label>
 
-{% if feature in ['latitude', 'longitude'] %}
-<input type="hidden" name="{{ feature }}">
-{% else %}
 <input type="number" step="any" name="{{ feature }}" required>
-{% endif %}
 
 </div>
 
@@ -298,7 +328,17 @@ Search
 
 Estimated Price<br><br>
 
-{{ prediction }} €
+{{ prediction|format_price }} €
+
+</div>
+
+{% endif %}
+
+{% if error_message %}
+
+<div class="card" style="background:#ffe0e0; border:2px solid #ff0000; color:#cc0000;">
+
+❌ {{ error_message }}
 
 </div>
 
