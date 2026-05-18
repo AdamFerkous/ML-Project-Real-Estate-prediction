@@ -1,15 +1,12 @@
 from flask import Flask, render_template, request
 import numpy as np
 import joblib
-import os
 
 app = Flask(__name__)
 
 # Load models
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-maison_model = joblib.load(os.path.join(BASE_DIR, "models/maison_random_forest_model.pkl"))
-appart_model = joblib.load(os.path.join(BASE_DIR, "models/apt_random_forest_model.pkl"))
+maison_model = joblib.load("models/maison_random_forest_model.pkl")
+appart_model = joblib.load("models/apt_random_forest_model.pkl")
 
 # Get feature names
 features_maison = list(maison_model.feature_names_in_)

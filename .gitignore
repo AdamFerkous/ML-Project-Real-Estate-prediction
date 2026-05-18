@@ -6,7 +6,6 @@ data_maison/*
 data_apt/*
 models/*
 .vscode/*
-scripts/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
